@@ -150,7 +150,6 @@
 - 在 GitHub 上提交 Issue
 - 扫描"关于我"中的二维码关注获取更新
 
-![关注我](images/qrcode.jpg)
 
 ## 许可证
 
