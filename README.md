@@ -4,7 +4,7 @@
 
 这是一个功能强大的 Chrome 浏览器扩展工具,主要用于 HTTP 接口测试和开发辅助。
 
-![插件主界面](https://github.com/salerkim/httpdebug/blob/main/images/docs/main-interface.png)
+![插件主界面](images/docs/main-interface.png)
 
 主要功能包括:
 
@@ -25,7 +25,7 @@
 3. 开启"开发者模式"
 4. 点击"加载已解压的扩展程序",选择解压后的文件夹
 
-![安装步骤](https://github.com/salerkim/httpdebug/blob/main/images/docs/installation.png)
+![安装步骤](images/docs/installation.png)
 
 ## 主要功能使用说明
 
@@ -38,7 +38,7 @@
 - 支持请求重定向控制
 - 支持 cURL 命令解析
 
-![HTTP测试界面](https://github.com/salerkim/httpdebug/blob/main/images/docs/http-test.png)
+![HTTP测试界面](images/docs/http-test.png)
 
 #### 使用方法
 1. 点击扩展图标,选择"HTTP测试"
@@ -48,8 +48,8 @@
    - 请求头
    - 请求体(如需)
    
-   ![请求配置-请求头](https://github.com/salerkim/httpdebug/blob/main/images/docs/request-config-header.png)
-   ![请求配置-请求体](https://github.com/salerkim/httpdebug/blob/main/images/docs/request-config-body.png)
+   ![请求配置-请求头](images/docs/request-config-header.png)
+   ![请求配置-请求体](images/docs/request-config-body.png)
 
 3. 点击"发送"按钮执行请求
 4. 在响应区域查看:
@@ -58,7 +58,7 @@
    - 响应体
    - Cookie信息
    
-   ![响应结果](https://github.com/salerkim/httpdebug/blob/main/images/docs/response-result.png)
+   ![响应结果](images/docs/response-result.png)
 
 ### 2. 网络请求抓取
 
@@ -68,7 +68,7 @@
 - 可将请求发送到测试工具重放
 - 支持清空历史记录
 
-![网络请求抓取](https://github.com/salerkim/httpdebug/blob/main/images/docs/network-capture.png)
+![网络请求抓取](images/docs/network-capture.png)
 
 #### 使用方法
 1. 打开开发者工具(F12)
@@ -77,7 +77,7 @@
 4. 可通过搜索框筛选请求
 5. 点击"发送到测试工具"将请求发送到主测试界面
 
-![开发者工具面板](https://github.com/salerkim/httpdebug/blob/main/images/docs/devtools-panel.png)
+![开发者工具面板](images/docs/devtools-panel.png)
 
 ### 3. JSON 格式化
 
@@ -87,7 +87,7 @@
 - 支持一键复制
 - 支持快捷键操作
 
-![JSON格式化工具](https://github.com/salerkim/httpdebug/blob/main/images/docs/json-format.png)
+![JSON格式化工具](images/docs/json-format.png)
 
 #### 使用方法
 1. 点击扩展图标,选择"JSON格式化"
@@ -101,16 +101,16 @@
 ### 4. 其他工具
 
 #### Base64 编解码
-![Base64工具](https://github.com/salerkim/httpdebug/blob/main/images/docs/base64-tool.png)
+![Base64工具](images/docs/base64-tool.png)
 
 #### URL 编解码
-![URL编解码](https://github.com/salerkim/httpdebug/blob/main/images/docs/url-encode.png)
+![URL编解码](images/docs/url-encode.png)
 
 #### 时间戳转换
-![时间戳工具](https://github.com/salerkim/httpdebug/blob/main/images/docs/timestamp-tool.png)
+![时间戳工具](images/docs/timestamp-tool.png)
 
 #### MD5 加密
-![MD5加密](https://github.com/salerkim/httpdebug/blob/main/images/docs/md5-tool.png)
+![MD5加密](images/docs/md5-tool.png)
 
 ## 快捷键
 
