@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>HTTP测试工具箱</title>
+    <script src="../lib/qrcode.min.js"></script>
+    <style>
+        body {
+            width: 280px;
+            padding: 0;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        .banner {
+            background: #2c3e50;
+            color: white;
+            padding: 12px 15px;
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 3px solid #34495e;
+        }
+        .menu-container {
+            padding: 15px;
+        }
+        .menu-section {
+            margin-bottom: 15px;
+        }
+        .section-title {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 12px;
+            margin: 5px 0;
+            cursor: pointer;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            text-decoration: none;
+            color: #333;
+            transition: all 0.2s ease;
+        }
+        .menu-item:hover {
+            background-color: #f5f5f5;
+            border-color: #2c3e50;
+            transform: translateX(3px);
+        }
+        .menu-item i {
+            margin-right: 8px;
+            font-size: 16px;
+            color: #2c3e50;
+        }
+        #qrcodeContainer {
+            display: none;
+            margin: 10px 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #qrcodeContainer.show {
+            display: block;
+        }
+        #qrcode {
+            padding: 10px;
+            background: white;
+            display: inline-block;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        #qrcodeUrl {
+            margin-top: 8px;
+            word-break: break-all;
+            font-size: 12px;
+            color: #666;
+            padding: 8px;
+            background: white;
+            border-radius: 4px;
+            max-height: 60px;
+            overflow-y: auto;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        /* 添加图标字体 */
+        @font-face {
+            font-family: 'Material Icons';
+            font-style: normal;
+            font-weight: 400;
+            src: url(https://fonts.gstatic.com/s/materialicons/v140/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+        }
+        .material-icons {
+            font-family: 'Material Icons';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 18px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-smoothing: antialiased;
+        }
+        /* 添加关于我的样式 */
+        #aboutContainer {
+            display: none;
+            margin: 10px 15px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #aboutContainer.show {
+            display: block;
+        }
+        .about-content {
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .about-image {
+            max-width: 150px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        .about-text {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        HTTP测试工具箱
+    </div>
+    <div class="menu-container">
+        <div class="menu-section">
+            <div class="section-title">常用工具</div>
+            <a class="menu-item" id="httpTest">
+                <i class="material-icons">http</i>
+                HTTP测试
+            </a>
+            <a class="menu-item" id="jsonFormat">
+                <i class="material-icons">code</i>
+                JSON格式化
+            </a>
+            <a class="menu-item" id="qrCode">
+                <i class="material-icons">qr_code</i>
+                二维码生成
+            </a>
+        </div>
+        <div class="menu-section">
+            <div class="section-title">更多功能</div>
+            <a class="menu-item" id="otherTools">
+                <i class="material-icons">build</i>
+                其他工具
+            </a>
+            <a class="menu-item" id="about">
+                <i class="material-icons">info</i>
+                关于我
+            </a>
+        </div>
+    </div>
+    <div id="qrcodeContainer">
+        <div id="qrcode"></div>
+        <div id="qrcodeUrl"></div>
+    </div>
+    <div id="aboutContainer">
+        <div class="about-content">
+            <img src="../images/qrcode.jpg" alt="关注我" class="about-image">
+            <div class="about-text">
+                扫描二维码关注我<br>
+                获取更多开发工具和技术分享
+            </div>
+        </div>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html> 

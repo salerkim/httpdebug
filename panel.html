@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HTTP测试面板</title>
+  <link rel="stylesheet" href="css/panel.css">
+</head>
+<body>
+  <div class="search-container">
+    <input type="text" id="searchInput" placeholder="搜索请求...">
+    <select id="methodFilter">
+      <option value="">所有方法</option>
+      <option value="GET">GET</option>
+      <option value="POST">POST</option>
+      <option value="PUT">PUT</option>
+      <option value="DELETE">DELETE</option>
+    </select>
+    <button id="clearRequests">清空</button>
+  </div>
+  <div id="requestList"></div>
+  <script src="js/panel.js"></script>
+</body>
+</html> 

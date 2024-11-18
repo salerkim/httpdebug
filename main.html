@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HTTP测试工具</title>
+  <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>HTTP测试工具</h1>
+    </header>
+    
+    <div class="main-content">
+      <!-- 左侧面板 -->
+      <div class="history-panel" id="historyPanel">
+        <!-- 拖动条 -->
+        <div class="resizer" id="panelResizer"></div>
+        
+        <!-- 标签页头部 -->
+        <div class="tabs-header">
+          <button class="tab-btn active" data-tab="history">历史记录</button>
+          <button class="tab-btn" data-tab="templates">参考模板</button>
+        </div>
+
+        <!-- 历史记录标签页 -->
+        <div class="tab-content active" id="historyTab">
+          <div class="history-controls">
+            <input type="text" id="historySearch" placeholder="搜索历史记录">
+            <select id="historyFilter">
+              <option value="all">全部</option>
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <button id="clearHistory" class="danger-btn">清空历史</button>
+          </div>
+          <div id="historyContainer"></div>
+        </div>
+
+        <!-- 模板标签页 -->
+        <div class="tab-content" id="templatesTab">
+          <div class="templates-list" id="templatesList">
+            <!-- 模板列表将通过JavaScript动态加载 -->
+          </div>
+        </div>
+      </div>
+
+      <!-- 切换按钮 -->
+      <button id="toggleHistory" class="toggle-history-btn" title="显示/隐藏侧边栏">
+        <span class="toggle-icon">◀</span>
+      </button>
+
+      <!-- 右侧面板 -->
+      <div class="request-panel">
+        <div class="request-builder">
+          <div class="method-url-row">
+            <select id="httpMethod">
+              <option value="GET">GET</option>
+              <option value="POST">POST</option>
+              <option value="PUT">PUT</option>
+              <option value="DELETE">DELETE</option>
+            </select>
+            <input type="text" id="urlInput" placeholder="请输入URL">
+            <button id="sendRequest" class="action-btn send-btn" title="发送请求">发送</button>
+            <button id="saveTemplateBtn" class="action-btn save-btn" title="保存为模板">保存为模板</button>
+          </div>
+
+          <!-- 在method-url-row后添加设置区域 -->
+          <div class="settings-panel">
+            <div class="settings-toggles">
+              <button class="settings-toggle" data-target="proxySettings">
+                <span class="toggle-icon">▼</span> 代理设置
+              </button>
+              <button class="settings-toggle" data-target="redirectSettings">
+                <span class="toggle-icon">▼</span> 重定向设置
+              </button>
+              <button class="settings-toggle" data-target="curlParser">
+                <span class="toggle-icon">▼</span> cURL解析
+              </button>
+            </div>
+
+            <!-- 代理设置区域 -->
+            <div class="settings-content" id="proxySettings" style="display: none;">
+              <div class="proxy-settings">
+                <div class="proxy-toggle">
+                  <input type="checkbox" id="enableProxy" class="toggle-checkbox">
+                  <label for="enableProxy">启用代理</label>
+                </div>
+                <div class="proxy-inputs" style="display: none;">
+                  <select id="proxyType">
+                    <option value="http">HTTP</option>
+                    <option value="https">HTTPS</option>
+                    <option value="socks4">SOCKS4</option>
+                    <option value="socks5">SOCKS5</option>
+                  </select>
+                  <input type="text" id="proxyHost" placeholder="代理服务器地址">
+                  <input type="text" id="proxyPort" placeholder="端口">
+                  <div class="proxy-auth">
+                    <input type="text" id="proxyUsername" placeholder="用户名（可选）">
+                    <input type="password" id="proxyPassword" placeholder="密码（可选）">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 重定向设置区域 -->
+            <div class="settings-content" id="redirectSettings" style="display: none;">
+              <div class="redirect-settings">
+                <div class="redirect-toggle">
+                  <input type="checkbox" id="enableRedirect" class="toggle-checkbox">
+                  <label for="enableRedirect">允许自动重定向</label>
+                </div>
+                <div class="redirect-info" style="display: none;">
+                  <span>最大重定向次数: </span>
+                  <input type="number" id="maxRedirects" value="5" min="1" max="10">
+                </div>
+              </div>
+            </div>
+
+            <!-- cURL解析器区域 -->
+            <div class="settings-content" id="curlParser" style="display: none;">
+              <div class="curl-parser">
+                <textarea id="curlCommand" placeholder="粘贴cURL命令以自动填充请求信息..."></textarea>
+                <button id="parseCurl" class="action-btn">解析cURL</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 请求配置标签页 -->
+          <div class="request-tabs">
+            <div class="tabs-header">
+              <button class="tab-btn active" data-tab="headers">请求头</button>
+              <button class="tab-btn" data-tab="body">请求体</button>
+            </div>
+
+            <!-- 请求头标签页 -->
+            <div class="tab-content active" id="headersTab">
+              <div class="header-controls">
+                <button id="addHeaderBtn">添加请求头</button>
+                <select id="commonHeaders">
+                  <option value="">选择常用请求头</option>
+                  <optgroup label="Content-Type">
+                    <option value="Content-Type:application/json">Content-Type: application/json</option>
+                    <option value="Content-Type:application/x-www-form-urlencoded">Content-Type: application/x-www-form-urlencoded</option>
+                    <option value="Content-Type:multipart/form-data">Content-Type: multipart/form-data</option>
+                    <option value="Content-Type:text/plain">Content-Type: text/plain</option>
+                    <option value="Content-Type:text/html">Content-Type: text/html</option>
+                  </optgroup>
+                  <optgroup label="Authorization">
+                    <option value="Authorization:Bearer ">Authorization: Bearer Token</option>
+                    <option value="Authorization:Basic ">Authorization: Basic Auth</option>
+                    <option value="Authorization:Digest ">Authorization: Digest</option>
+                  </optgroup>
+                  <optgroup label="Cookie">
+                    <option value="Cookie:">Cookie</option>
+                    <option value="Set-Cookie:">Set-Cookie</option>
+                  </optgroup>
+                  <optgroup label="Cache">
+                    <option value="Cache-Control:no-cache">Cache-Control: no-cache</option>
+                    <option value="Cache-Control:no-store">Cache-Control: no-store</option>
+                    <option value="Cache-Control:max-age=0">Cache-Control: max-age=0</option>
+                    <option value="If-None-Match:">If-None-Match</option>
+                    <option value="If-Modified-Since:">If-Modified-Since</option>
+                  </optgroup>
+                  <optgroup label="CORS">
+                    <option value="Origin:">Origin</option>
+                    <option value="Access-Control-Request-Method:">Access-Control-Request-Method</option>
+                    <option value="Access-Control-Request-Headers:">Access-Control-Request-Headers</option>
+                  </optgroup>
+                  <optgroup label="Security">
+                    <option value="X-CSRF-Token:">X-CSRF-Token</option>
+                    <option value="X-XSS-Protection:1; mode=block">X-XSS-Protection: 1; mode=block</option>
+                    <option value="X-Frame-Options:SAMEORIGIN">X-Frame-Options: SAMEORIGIN</option>
+                    <option value="X-Content-Type-Options:nosniff">X-Content-Type-Options: nosniff</option>
+                  </optgroup>
+                  <optgroup label="Accept">
+                    <option value="Accept:application/json">Accept: application/json</option>
+                    <option value="Accept:text/html">Accept: text/html</option>
+                    <option value="Accept:*/*">Accept: */*</option>
+                    <option value="Accept-Language:zh-CN,zh;q=0.9,en;q=0.8">Accept-Language: zh-CN,zh;q=0.9,en;q=0.8</option>
+                    <option value="Accept-Encoding:gzip, deflate, br">Accept-Encoding: gzip, deflate, br</option>
+                  </optgroup>
+                  <optgroup label="User-Agent">
+                    <option value="User-Agent:Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36">Chrome Windows</option>
+                    <option value="User-Agent:Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36">Chrome Mac</option>
+                    <option value="User-Agent:Mozilla/5.0 (iPhone; CPU iPhone OS 17_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.2 Mobile/15E148 Safari/604.1">Safari iOS</option>
+                    <option value="User-Agent:Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Mobile Safari/537.36">Chrome Android</option>
+                    <option value="User-Agent:PostmanRuntime/7.36.3">Postman</option>
+                    <option value="User-Agent:curl/8.4.0">cURL</option>
+                  </optgroup>
+                  <optgroup label="Proxy & Client">
+                    <option value="X-Forwarded-For:">X-Forwarded-For</option>
+                    <option value="X-Real-IP:">X-Real-IP</option>
+                    <option value="Client-IP:">Client-IP</option>
+                    <option value="X-Requested-With:XMLHttpRequest">X-Requested-With: XMLHttpRequest</option>
+                  </optgroup>
+                  <optgroup label="Other">
+                    <option value="Referer:">Referer</option>
+                    <option value="Connection:keep-alive">Connection: keep-alive</option>
+                    <option value="Upgrade-Insecure-Requests:1">Upgrade-Insecure-Requests: 1</option>
+                    <option value="DNT:1">DNT: 1</option>
+                    <option value="Pragma:no-cache">Pragma: no-cache</option>
+                  </optgroup>
+                </select>
+              </div>
+              <div id="headersContainer"></div>
+            </div>
+
+            <!-- 请求体标签页 -->
+            <div class="tab-content" id="bodyTab">
+              <textarea id="requestBody" placeholder="输入请求体"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="response-viewer" id="responseContainer">
+          <div class="response-status">
+            <span id="responseStatus"></span>
+          </div>
+          <div class="response-tabs">
+            <div class="tabs-header">
+              <button class="tab-btn active" data-tab="responseBody">响应体</button>
+              <button class="tab-btn" data-tab="responseHeaders">响应头</button>
+              <button class="tab-btn" data-tab="responseCookies">Cookie</button>
+            </div>
+            
+            <!-- 响应体标签页 -->
+            <div class="tab-content active" id="responseBodyTab">
+              <pre id="responseBodyContent"></pre>
+            </div>
+            
+            <!-- 响应头标签页 -->
+            <div class="tab-content" id="responseHeadersTab">
+              <pre id="responseHeadersContent"></pre>
+            </div>
+            
+            <!-- Cookie标签页 -->
+            <div class="tab-content" id="responseCookiesTab">
+              <pre id="responseCookiesContent"></pre>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="js/templates.js"></script>
+  <script src="js/main.js"></script>
+  <!-- 在body结束标签前添加模态框 -->
+  <div class="modal fade" id="saveTemplateModal" tabindex="-1" aria-labelledby="saveTemplateModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="saveTemplateModalLabel">保存为模板</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="templateName" class="form-label">模板名称</label>
+            <input type="text" class="form-control" id="templateName" required>
+          </div>
+          <div class="mb-3">
+            <label for="templateDesc" class="form-label">描述（可选）</label>
+            <textarea class="form-control" id="templateDesc" rows="3"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary" id="confirmSaveTemplate">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div id="requestList" class="request-list">
+      <!-- 请求列表将在这里动态添加 -->
+    </div>
+  </div>
+</body>
+</html> 

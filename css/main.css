@@ -1,0 +1,1762 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: #4CAF50;
+  color: white;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.main-content {
+  display: flex;
+  height: calc(100vh - 60px);
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+}
+
+.request-panel {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.request-builder {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.response-viewer {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-panel {
+  width: 300px;
+  background: white;
+  border-right: 1px solid #ddd;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+.history-panel.collapsed {
+  width: 0;
+  border: none;
+}
+
+/* 请求方法和URL区域 */
+.method-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.method-selector select {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.url-input {
+  flex: 1;
+}
+
+.url-input input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* 请求头区域 */
+.headers-section {
+  margin: 15px 0;
+}
+
+.header-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 100%;
+  max-width: 100%;
+  align-items: center;
+}
+
+.header-controls > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.header-controls select,
+.header-controls input {
+  max-width: 100%;
+  min-width: 0;
+}
+
+.header-controls button {
+  white-space: nowrap;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+
+.header-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+
+.header-row input {
+  flex: 1;
+  min-width: 150px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.header-row .remove-header {
+  padding: 8px 16px;
+  background-color: #dc3545;
+  white-space: nowrap;
+}
+
+/* 请求体区域 */
+.body-section {
+  margin: 15px 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+#requestBody {
+  width: 100%;
+  max-width: 100%;
+  height: 200px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  font-family: monospace;
+  box-sizing: border-box;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* 按钮样式 */
+button {
+  padding: 8px 16px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+button.danger-btn {
+  background-color: #dc3545;
+}
+
+button.danger-btn:hover {
+  background-color: #c82333;
+}
+
+/* 响应区域 */
+.response-viewer {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.response-status {
+  padding: 10px;
+  background-color: #e8f5e9;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
+.response-headers, .response-body {
+  margin-top: 10px;
+}
+
+.response-headers pre, .response-body pre {
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+  overflow-x: auto;
+  margin: 0;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-family: monospace;
+}
+
+/* 历史记录区域 */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.history-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.history-controls input, .history-controls select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.history-item {
+  padding: 12px;
+  border: 1px solid #ddd;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  background-color: #f5f5f5;
+  border-color: #4CAF50;
+}
+
+.history-item .method {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.history-item .method.get { color: #28a745; }
+.history-item .method.post { color: #007bff; }
+.history-item .method.put { color: #ffc107; }
+.history-item .method.delete { color: #dc3545; }
+
+.history-item .url {
+  display: block;
+  margin: 5px 0;
+  word-break: break-all;
+}
+
+.history-item .timestamp {
+  color: #666;
+  font-size: 0.8em;
+}
+
+.history-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.history-item-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 5px;
+  font-size: 0.8em;
+  color: #666;
+}
+
+.header-count {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.delete-history-item {
+  background: none;
+  border: none;
+  color: #dc3545;
+  font-size: 18px;
+  padding: 2px 6px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+}
+
+.delete-history-item:hover {
+  opacity: 1;
+  background: none;
+}
+
+/* 加载状态 */
+.loading {
+  padding: 20px;
+  text-align: center;
+  color: #666;
+  background-color: #f8f9fa;
+  border-radius: 4px;
+}
+
+.loading::after {
+  content: '...';
+  animation: dots 1s steps(5, end) infinite;
+}
+
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60% { content: '...'; }
+  80%, 100% { content: ''; }
+}
+
+/* 错误提示 */
+.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border: 1px solid #f5c6cb;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.error h4 {
+  margin: 0 0 5px 0;
+  color: #721c24;
+}
+
+/* 标题样式 */
+h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+h4 {
+  margin: 5px 0;
+  color: #333;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  padding: 5px;
+  cursor: pointer;
+  color: #666;
+}
+
+.icon-btn:hover {
+  color: #333;
+}
+
+.toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 14px;
+}
+
+.history-panel.collapsed .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.method-url-row {
+  width: 100%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.method-url-row select {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.method-url-row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* 操作按钮样式 */
+.action-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 80px;
+  height: 36px;
+}
+
+.send-btn {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.send-btn:hover {
+  background-color: #45a049;
+}
+
+.save-btn {
+  background-color: #2196F3;
+  color: white;
+}
+
+.save-btn:hover {
+  background-color: #1976D2;
+}
+
+/* 移除原有的发送按钮样式 */
+.request-builder > button {
+  display: none;
+}
+
+/* 响应式布局 */
+@media (max-width: 768px) {
+  .main-content {
+    flex-direction: column;
+  }
+
+  .history-panel {
+    width: 100%;
+    height: 300px;
+  }
+
+  .history-panel.collapsed {
+    height: 0;
+  }
+
+  .toggle-history-btn {
+    left: 20px;
+    top: 300px;
+  }
+
+  .history-panel.collapsed + .request-panel .toggle-history-btn {
+    top: 0;
+  }
+
+  .request-panel {
+    padding: 20px;
+  }
+}
+
+/* 修改切换按钮样式 */
+.toggle-history-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 40px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
+  left: 300px;
+}
+
+.toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease;
+  font-size: 12px;
+}
+
+/* 修改历史面板样式 */
+.history-panel {
+  width: 300px;
+  background: white;
+  border-right: 1px solid #ddd;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+.history-panel.collapsed {
+  width: 0;
+  border: none;
+}
+
+/* 当历史折叠时，换按钮动到最左边 */
+.history-panel.collapsed ~ .toggle-history-btn {
+  left: 0;
+}
+
+/* 修改请面板样式 */
+.request-panel {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+  transition: margin-left 0.3s ease;
+}
+
+/* 当历史面板折叠时的式 */
+.history-panel.collapsed ~ .request-panel {
+  margin-left: 16px;
+}
+
+/* 确保主内容区域相对定位 */
+.main-content {
+  display: flex;
+  height: calc(100vh - 60px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 添加拖动条样式 */
+.resizer {
+  width: 5px;
+  background: transparent;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: background-color 0.3s;
+}
+
+.resizer:hover,
+.resizer.dragging {
+  background: rgba(76, 175, 80, 0.5);
+}
+
+/* 当面板隐藏时，移除拖动条 */
+.history-panel.collapsed .resizer {
+  display: none;
+}
+
+/* 修改折叠状态的样式 */
+.history-panel.collapsed {
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+  margin-left: 0;
+}
+
+.history-panel.collapsed + .request-panel .toggle-history-btn {
+  left: 0;
+}
+
+/* 现有样式中添加或修改 */
+
+/* 标签页样式 */
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 15px;
+  background: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 10px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 14px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.tab-btn.active {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #4CAF50;
+}
+
+.tab-content {
+  display: none;
+  height: calc(100% - 50px);
+  overflow-y: auto;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* 修改历史面板样式 */
+.history-panel {
+  width: 300px;
+  min-width: 200px;
+  max-width: 600px;
+  background: white;
+  border-right: 1px solid #ddd;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+/* 修改拖动条样式 */
+.resizer {
+  width: 5px;
+  background: transparent;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+.resizer:hover,
+.resizer.dragging {
+  background: rgba(76, 175, 80, 0.5);
+}
+
+/* 修改切换按钮样式 */
+.toggle-history-btn {
+  position: absolute;
+  left: 300px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 8px 4px;
+  cursor: pointer;
+  z-index: 1000;
+  width: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
+}
+
+/* 折叠状态样式 */
+.history-panel.collapsed {
+  width: 0;
+  padding: 0;
+  border-right: none;
+}
+
+.history-panel.collapsed ~ .toggle-history-btn {
+  left: 0;
+}
+
+/* 内容区域样式 */
+#historyTab,
+#templatesTab {
+  padding: 15px;
+}
+
+/* 修改左侧面板样式 */
+.history-panel {
+  width: 300px;
+  min-width: 200px;
+  max-width: 600px;
+  background: white;
+  border-right: 1px solid #ddd;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.3s ease;
+}
+
+/* 修改拖动条样式 */
+.resizer {
+  width: 5px;
+  background: transparent;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: background-color 0.3s;
+}
+
+.resizer:hover,
+.resizer.dragging {
+  background: rgba(76, 175, 80, 0.5);
+}
+
+/* 修改切换按钮样式 */
+.toggle-btn-container {
+  position: relative;
+  z-index: 1000;
+}
+
+.toggle-history-btn {
+  position: absolute;
+  left: 300px;
+  top: 50vh;
+  transform: translateY(-50%);
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 8px 4px;
+  cursor: pointer;
+  width: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
+}
+
+/* 标签页样式 */
+.tabs-header {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  background: #f8f9fa;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.tab-content {
+  display: none;
+  padding: 15px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* 折叠状态样式 */
+.history-panel.collapsed {
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.history-panel.collapsed ~ .toggle-btn-container .toggle-history-btn {
+  left: 0;
+}
+
+/* 修改主内容区域样式 */
+.main-content {
+  display: flex;
+  height: calc(100vh - 60px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 修改左侧板样式 */
+.history-panel {
+  width: 300px;
+  min-width: 300px;
+  max-width: 600px;
+  background: white;
+  border-right: 1px solid #ddd;
+  position: relative;
+  overflow: hidden;
+  padding: 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+/* 修改折叠状态样式 */
+.history-panel.collapsed {
+  width: 0;
+  min-width: 0;
+  padding: 0;
+  border-right: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* 修改切换按钮样式 */
+.toggle-history-btn {
+  position: absolute;
+  left: 300px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 0 4px 4px 0;
+  padding: 8px 4px;
+  cursor: pointer;
+  z-index: 1000;
+  width: 16px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.3s ease;
+}
+
+/* 修改请求面板样式 */
+.request-panel {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #fff;
+  transition: margin-left 0.3s ease, padding-left 0.3s ease;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* 当历史面板折叠时，调整请求面板的位置 */
+.history-panel.collapsed + .toggle-history-btn {
+  left: 0;
+}
+
+.history-panel.collapsed ~ .request-panel {
+  padding-left: 36px;
+}
+
+/* 当历史面板展开时，调整请求面板的位置 */
+.history-panel:not(.collapsed) ~ .request-panel {
+  padding-left: 36px;
+}
+
+/* 修改拖动条样式 */
+.resizer {
+  width: 5px;
+  background: transparent;
+  cursor: col-resize;
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  transition: background-color 0.3s;
+}
+
+.resizer:hover,
+.resizer.dragging {
+  background: rgba(76, 175, 80, 0.5);
+}
+
+/* 当面板隐藏时，移除拖动条 */
+.history-panel.collapsed .resizer {
+  display: none;
+}
+
+/* 标签页内容区域样式 */
+.tab-content {
+  padding: 15px;
+  overflow-y: auto;
+  flex: 1;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* 折叠状态下的标签页内容 */
+.history-panel.collapsed .tab-content {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* 优化过渡效果 */
+.history-panel,
+.toggle-history-btn,
+.request-panel,
+.tab-content {
+  transition: all 0.3s ease;
+}
+
+/* 提示框样式 */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 24px;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  z-index: 1000;
+  animation: fadeInOut 3s ease;
+}
+
+.toast.success {
+  background-color: #4CAF50;
+}
+
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateY(20px); }
+  10% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-20px); }
+}
+
+/* 请求配置标签页样式 */
+.request-tabs {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.request-tabs .tabs-header {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  border-radius: 4px 4px 0 0;
+  width: 200px;
+  position: relative;
+  z-index: 1;
+}
+
+.request-tabs .tab-btn {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 14px;
+  position: relative;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.request-tabs .tab-btn:hover {
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.request-tabs .tab-btn.active {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.request-tabs .tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #4CAF50;
+}
+
+.request-tabs .tab-content {
+  display: none;
+  padding: 20px;
+  width: 98%;
+  position: relative;
+  z-index: 1;
+}
+
+.request-tabs .tab-content.active {
+  display: block;
+}
+
+/* 请求体文本框样式 */
+#requestBody {
+  width: 98%;
+  height: 300px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  resize: vertical;
+}
+
+/* 请求头容器样式 */
+#headersContainer {
+  margin-top: 15px;
+  max-height: 300px;
+  overflow-y: auto;
+  width: 100%;
+}
+
+/* 修改method-url-row样式 */
+.method-url-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background: #fff;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.method-url-row select {
+  width: 100px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.method-url-row input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* 其他样式保持不变... */
+
+/* 响应查看器样式 */
+.response-viewer {
+  width: 100%;
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.response-status {
+  padding: 10px 15px;
+  background-color: #e8f5e9;
+  border-bottom: 1px solid #ddd;
+  font-weight: 500;
+}
+
+.response-tabs {
+  display: flex;
+  flex-direction: column;
+}
+
+.response-tabs .tabs-header {
+  display: flex;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+  width: 300px;
+}
+
+.response-tabs .tab-btn {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: #666;
+  font-size: 14px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.response-tabs .tab-btn:hover {
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.response-tabs .tab-btn.active {
+  color: #4CAF50;
+  font-weight: bold;
+}
+
+.response-tabs .tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: #4CAF50;
+}
+
+.response-tabs .tab-content {
+  display: none;
+  padding: 15px;
+  overflow-x: auto;
+}
+
+.response-tabs .tab-content.active {
+  display: block;
+}
+
+.response-tabs pre {
+  margin: 0;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+/* 模板列表样式 */
+.template-item {
+  position: relative;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.template-item:hover {
+  background-color: #f5f5f5;
+}
+
+.template-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.template-header h4 {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.delete-template-btn {
+  background: none;
+  border: none;
+  color: #999;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 5px;
+}
+
+.delete-template-btn:hover {
+  color: #dc3545;
+}
+
+/* 详细信息悬浮框样式 */
+.template-details {
+  display: none;
+  position: fixed;
+  left: calc(300px + 10px);
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  z-index: 9999;
+}
+
+.template-item:hover .template-details {
+  display: block;
+}
+
+/* 当历史面板折叠时调整悬浮框位置 */
+.history-panel.collapsed ~ .request-panel .template-details {
+  left: 10px;
+}
+
+/* 优化悬浮框内容样式 */
+.template-details .template-info {
+  margin-bottom: 8px;
+}
+
+.template-details .method {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.template-details pre {
+  max-height: 200px;
+  overflow: auto;
+  background: #f8f9fa;
+  padding: 8px;
+  border-radius: 4px;
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+/* 模板标签页样式 */
+#templatesTab {
+  height: calc(100% - 50px);
+  overflow-y: auto;
+}
+
+/* 模板分类标签样式 */
+.template-category {
+  margin-bottom: 20px;
+}
+
+.template-category h3 {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
+/* cURL解析器样式 */
+.curl-parser {
+  margin: 10px 0;
+  padding: 15px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: flex;
+  gap: 10px;
+}
+
+.curl-parser textarea {
+  flex: 1;
+  min-height: 60px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 13px;
+  resize: vertical;
+}
+
+.curl-parser button {
+  align-self: flex-start;
+}
+
+/* JSON查看器样式 */
+.response-body-controls {
+  margin-bottom: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.response-body-controls select,
+.response-body-controls button {
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+}
+
+.json-viewer {
+  font-family: monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  background: white;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.json-node {
+  margin: 2px 0;
+}
+
+.json-key {
+  color: #881391;
+}
+
+.json-value {
+  color: #1a1aa6;
+}
+
+.json-bracket {
+  color: #000;
+  cursor: pointer;
+  user-select: none;
+}
+
+.json-bracket::before {
+  content: '▼';
+  display: inline-block;
+  margin-right: 5px;
+  font-size: 10px;
+  transition: transform 0.2s;
+}
+
+.json-content.collapsed {
+  display: none;
+}
+
+.json-content.collapsed + .json-bracket {
+  margin-left: 0;
+}
+
+.json-bracket:hover {
+  color: #4CAF50;
+}
+
+.collapsible.collapsed + .json-bracket::before {
+  transform: rotate(-90deg);
+}
+
+.json-string { color: #1a1aa6; }
+.json-number { color: #1c00cf; }
+.json-boolean { color: #1c00cf; }
+.json-null { color: #808080; }
+
+/* 确保所有内容都使用border-box */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 当历史面板折叠时的请求面板样式 */
+.history-panel.collapsed ~ .request-panel {
+  width: 100%;
+  padding-left: 36px; /* 为切换按钮留出空间 */
+}
+
+/* Cookie显示样式 */
+.cookies-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cookie-item {
+  padding: 10px;
+  background: #f8f9fa;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.cookie-name {
+  font-weight: bold;
+  color: #2196F3;
+  margin-bottom: 5px;
+}
+
+.cookie-value {
+  word-break: break-all;
+  margin-bottom: 5px;
+  font-family: monospace;
+}
+
+.cookie-options {
+  font-size: 12px;
+  color: #666;
+}
+
+.cookie-options span {
+  background: #e9ecef;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-right: 5px;
+}
+
+/* 代理设置样式 */
+.proxy-settings {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f8f9fa;
+}
+
+.proxy-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.toggle-checkbox {
+  width: 40px;
+  height: 20px;
+  appearance: none;
+  background: #ccc;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.toggle-checkbox:checked {
+  background: #4CAF50;
+}
+
+.toggle-checkbox::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: left 0.3s;
+}
+
+.toggle-checkbox:checked::before {
+  left: 22px;
+}
+
+.proxy-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  background: white;
+  border-radius: 4px;
+}
+
+.proxy-inputs select,
+.proxy-inputs input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.proxy-inputs select {
+  width: 100px;
+}
+
+.proxy-inputs input[type="text"],
+.proxy-inputs input[type="password"] {
+  flex: 1;
+  min-width: 150px;
+}
+
+.proxy-auth {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+#proxyPort {
+  width: 100px;
+}
+
+/* 重定向设置样式 */
+.redirect-settings {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f8f9fa;
+}
+
+.redirect-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.redirect-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 5px 0;
+}
+
+.redirect-info input[type="number"] {
+  width: 60px;
+  padding: 4px 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* 设置面板样式 */
+.settings-panel {
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+}
+
+.settings-toggles {
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #ddd;
+}
+
+.settings-toggle {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: all 0.3s ease;
+}
+
+.settings-toggle:hover {
+  background: #f0f0f0;
+}
+
+.settings-toggle .toggle-icon {
+  font-size: 10px;
+  transition: transform 0.3s ease;
+}
+
+.settings-content {
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.settings-content:last-child {
+  border-bottom: none;
+}
+
+/* 修改现有的代理、重定向和cURL解析器样式 */
+.proxy-settings,
+.redirect-settings,
+.curl-parser {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+}
+
+.proxy-toggle,
+.redirect-toggle {
+  margin-bottom: 15px;
+}
+
+.curl-parser textarea {
+  width: 100%;
+  min-height: 100px;
+  margin-bottom: 10px;
+}
+
+.request-item {
+  display: flex;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.request-item:hover {
+  background-color: #f5f5f5;
+}
+
+.request-method {
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.request-method.get {
+  background-color: #e3f2fd;
+  color: #1976d2;
+}
+
+.request-method.post {
+  background-color: #e8f5e9;
+  color: #388e3c;
+}
+
+.request-url {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.request-time {
+  color: #666;
+  font-size: 0.9em;
+}
+
+/* 请求头相关样式 */
+.header-row {
+  display: flex;
+  margin-bottom: 8px;
+  gap: 8px;
+}
+
+.header-key,
+.header-value {
+  flex: 1;
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.delete-header-btn {
+  padding: 6px 12px;
+  background: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-header-btn:hover {
+  background: #cc0000;
+}
+
+.header-controls {
+  margin-bottom: 16px;
+  display: flex;
+  gap: 8px;
+}
+
+#addHeaderBtn {
+  padding: 6px 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#addHeaderBtn:hover {
+  background: #45a049;
+}
+
+#commonHeaders {
+  flex: 1;
+  padding: 6px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+/* Cookie显示相关样式 */
+.cookies-list {
+  padding: 10px;
+}
+
+.cookie-item {
+  background: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  padding: 10px;
+}
+
+.cookie-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.cookie-name {
+  font-weight: bold;
+  color: #2c3e50;
+  margin-right: 10px;
+}
+
+.cookie-value {
+  color: #34495e;
+  word-break: break-all;
+}
+
+.cookie-attributes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.cookie-attribute {
+  background: #e9ecef;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.9em;
+  display: inline-flex;
+  align-items: center;
+}
+
+.attribute-key {
+  color: #6c757d;
+}
+
+.attribute-value {
+  margin-left: 4px;
+  color: #495057;
+}
+
+.cookie-item.error {
+  background: #fff3f3;
+  border-color: #ffa7a7;
+}
+
+.cookie-error {
+  color: #dc3545;
+  font-size: 0.9em;
+}
+
+.no-cookies {
+  color: #6c757d;
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}

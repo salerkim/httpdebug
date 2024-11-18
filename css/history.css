@@ -1,0 +1,131 @@
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f5f5f5;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.history-controls {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.history-controls input {
+  min-width: 200px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.history-controls select {
+  min-width: 100px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.history-item {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #fff;
+  gap: 15px;
+}
+
+.history-item:hover {
+  background-color: #f8f9fa;
+}
+
+.history-item .method {
+  font-weight: bold;
+  min-width: 80px;
+}
+
+.history-item .method.get { color: #28a745; }
+.history-item .method.post { color: #007bff; }
+.history-item .method.put { color: #ffc107; }
+.history-item .method.delete { color: #dc3545; }
+
+.history-item .url {
+  flex: 1;
+  word-break: break-all;
+}
+
+.history-item .timestamp {
+  color: #666;
+  font-size: 0.9em;
+  white-space: nowrap;
+}
+
+.history-item .actions {
+  display: flex;
+  gap: 10px;
+}
+
+button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.danger-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.danger-btn:hover {
+  background-color: #c82333;
+}
+
+.primary-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.primary-btn:hover {
+  background-color: #0056b3;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  padding: 4px 8px;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.restore-btn {
+  background-color: #28a745;
+  color: white;
+  padding: 4px 8px;
+}
+
+.restore-btn:hover {
+  background-color: #218838;
+} 

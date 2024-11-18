@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>HTTP测试工具 - 历史记录</title>
+  <link rel="stylesheet" href="css/history.css">
+</head>
+<body>
+  <div class="container">
+    <div class="history-header">
+      <h2>请求历史记录</h2>
+      <div class="history-controls">
+        <input type="text" id="historySearch" placeholder="搜索历史记录">
+        <select id="historyFilter">
+          <option value="all">全部</option>
+          <option value="GET">GET</option>
+          <option value="POST">POST</option>
+          <option value="PUT">PUT</option>
+          <option value="DELETE">DELETE</option>
+        </select>
+        <button id="clearHistory" class="danger-btn">清空历史</button>
+      </div>
+    </div>
+    <div id="historyContainer"></div>
+  </div>
+  <script src="js/history.js"></script>
+</body>
+</html> 
